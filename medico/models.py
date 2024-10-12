@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
-# Create your models here.
+# criação das modelos dos objetos ou classe
+#valida se é médico, especialidade e dados
 def is_medico(user):
     return DadosMedico.objects.filter(user=user).exists()
 
@@ -34,7 +35,8 @@ class DadosMedico(models.Model):
     def proxima_data(self):
         proxima_data = DatasAbertas.objects.filter(user=self.user).filter(data__gt=datetime.now()).filter(agendado=False).order_by('data').first()
         return proxima_data
-
+    
+#classe para datas disponíveis
 class DatasAbertas(models.Model):
     data = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
